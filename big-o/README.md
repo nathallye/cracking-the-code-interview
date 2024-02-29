@@ -67,3 +67,51 @@ After all, we could take essentially any algorithm, special case some input, and
 For many—probably most—algorithms, the worst case and the expected case are the same. 
 
 Sometimes they're different, though, and we need to describe both of the runtimes.
+
+### ▶ Space Complexity
+
+`Time is not the only thing that matters in an algorithm`. We might also care about the `amount of memory—or space—required by an algorithm`.
+
+**Space complexity is a parallel concept to time complexity**. If we need to create an array of size n, this will require 0(n) space. 
+If we need a two-dimensional array of size nxn, this will require 0(nˆ2) space.
+
+Stack space in recursive calls counts, too. For example, code like this would take `0(n) time` and `0(n) space`:
+
+``` java
+int sum(int n) {
+  if (n <= 0) {
+    return 0;
+  }
+  return n + sum(n-1);
+}
+```
+
+> Each call adds a level to the stack.
+
+``` java
+sum(4)
+  -> sum(3)
+    -> sum(2)
+      -> sum(1)
+        -> sum(0)
+```
+
+> Each of these calls is added to the call stack and takes up actual memory.
+
+However, **just because you have n calls total doesn't mean it takes O(n) space**. Consider the below function, which adds adjacent elements between 0 and n:
+
+``` java
+int pairSumSequence(int n) { 
+  int sum = 0;
+  for (int i = 0; i < n; i++) {
+    sum += pairSum(i, i + 1);
+  }
+  return sum;
+}
+
+int pairSum(int a, int b) {
+  return a + b;
+}
+```
+
+> There will be roughly `O(n)` calls to `pairSum`. However, those calls do not exist simultaneously on the call stack, so you only need `0(1) space`.
