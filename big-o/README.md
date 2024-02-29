@@ -8,17 +8,17 @@ Not only might you be judged harshly for not really understanding big 0, but you
 Master this concept.
 
 ### ▶ An Analogy
-> **Imagine the following scenario:**
+- **Imagine the following scenario:**
 
 You've got a file on a hard drive and you need to send it to your friend who lives across the country. You need to get the file to your friend as fast as possible. 
 
-> **How should you send it?**
+- **How should you send it?**
 
 Most people's first thought would be email, FTP, or some other means of electronic transfer. That thought is reasonable, but only haif correct.
 
 If it's a small file, you're certainly right, it would take 5-1 0 hours to get to an airport, hop on a flight, and then deliver it to your friend.
 
-> **But what if the file were really, really large? Is it possible that it's faster to physically deliver it via plane?**
+- **But what if the file were really, really large? Is it possible that it's faster to physically deliver it via plane?**
 
 Yes, actually it is, A `one-terabyte (1 T8) file could take more than a day to transfer electronically`. It would be *much faster to just fly it across the country*. If your file is that urgent (and cost isn't an issue), you might just want to do that.
 
