@@ -2,7 +2,9 @@
 
 ## Big O
 
-![image](https://github.com/nathallye/cracking-the-code-interview/assets/86172286/12a043b3-4982-461b-a767-3b3cbda84c91)# Cracking the code interview 
+<div align="center">
+  <img width="500" src="https://github.com/nathallye/cracking-the-code-interview/assets/86172286/12a043b3-4982-461b-a767-3b3cbda84c91">
+</div>
 
 `Big 0 time` is the `language and metric we use to describe the efficiency of algorithms`. 
 Not understanding it thoroughly can really hurt you in developing an algorithm. 
@@ -58,7 +60,7 @@ This is `0(N)`. (This actually depends slightly on the implementation of quick s
 2. **Worst Case:** What if we get really unlucky and the `pivot is repeatedly the biggest element in the array`?
 (Actually, this can easily happen. If the pivot is chosen to be the first element in the subarray and the array is sorted in reverse order, we'll have this situation.) 
 In this case, our recursion doesn't divide the array in half and recurse on each half. 
-It just shrinks the subarray by one element. This will degenerate to an `O(N^)2` runtime.
+It just shrinks the subarray by one element. This will degenerate to an `O(N^2)` runtime.
 
 3. **Expected Case:** Usually, though, these wonderful or terrible situations won't happen. Sure, sometimes the pivot will be very low or very high, but it won't happen over and over again. We can expect a runtime of `0(N log N)`.
 
@@ -117,3 +119,42 @@ int pairSum(int a, int b) {
 ```
 
 > There will be roughly `O(n)` calls to `pairSum`. However, those calls do not exist simultaneously on the call stack, so you only need `0(1) space`.
+
+### ▶ Drop the Constants
+
+`It is very possible for 0(N) code to run faster than 0(1) code for specific inputs`. Big 0 just describes the rate of increase.
+
+For this reason, we drop the constants in runtime. An algorithm that one might have described as `0(2N)` is actually `O(N)`. Many people resist doing this. They will see code that has two (non-nested) for loops and continue this 0(2N). They think they're being more "precise." They're not.
+
+Consider the below code:
+
+``` java
+// Min and Max                    
+int min = Integer.MIN_VALUE;
+int max = Integer.MAX_VALUE;
+
+for (int x : array) {
+  if (x < min) min = x;
+  if (x > max) max = x;
+}
+
+// Min and Max 2
+int min = Integer.MIN_VALUE;
+int max = Integer.MAX_VALUE;
+
+for (int x : array) {
+  if (x < min) min = x;
+}
+
+for (int x : array) {
+  if (x > max) max = x;
+}
+```
+
+Which one is faster? 
+
+The first one does one for loop and the other one does two for loops. But then, the first solution has two lines of code per for loop rather than one.
+
+If you're going to count the number of instructions, then you'd have to go to the assembly level and take into account that multiplication requires more instructions than addition, how the compiler would optimize something, and all sorts of other details.
+
+This would be horrendously complicated, so don't even start going down this road. Big O allows us to express how the runtime scales. We just need to accept that it doesn't mean that 0(N) is always better than 0(N^2).
