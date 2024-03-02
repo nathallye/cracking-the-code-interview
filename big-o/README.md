@@ -2,6 +2,8 @@
 
 ## Big O
 
+![image](https://github.com/nathallye/cracking-the-code-interview/assets/86172286/12a043b3-4982-461b-a767-3b3cbda84c91)# Cracking the code interview 
+
 `Big 0 time` is the `language and metric we use to describe the efficiency of algorithms`. 
 Not understanding it thoroughly can really hurt you in developing an algorithm. 
 Not only might you be judged harshly for not really understanding big 0, but you will also struggle to judge when your algorithm is getting faster or slower.
