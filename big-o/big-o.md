@@ -115,7 +115,7 @@ public class BigONotation {
 
 		endTime = System.currentTimeMillis();
 
-		System.out.println("Linear Search Took " + (endTime - startTime) + " ms");
+		System.out.println("Linear Search Took " + (endTime - startTime) + "ms");
 	}
 
   public void generateRandomArray() {
@@ -150,6 +150,77 @@ public class BigONotation {
 > As the array size increases (e.g., 200,000, 300,000, 400,000), the linear search operation may take longer to complete due to the increased number of elements to search through.
 > So we can see as the number of elements scale get bigger the number of elements we have to deal with that is in direct relation to the number of elements and that is why it is known as `order of n`. 
 
+## O(N^2) 
+
+- `Time to complete` will be `proportional to the square(quadrado) of the amount of data`(Bubble Sort).
+Algorithms with more nested iterations will result in O(N^3), O(N^4), etc. performance.
+`Each pass through the outer loop(laço externo) (0)N requires usto go through the entire list again` so N multiplies	against itself or it is squared.
+
+``` java
+public class BigONotation {
+
+	private int[] theArray;
+
+	private int arraySize;
+
+	private int itemsInArray = 0;
+
+	static long startTime;
+
+	static long endTime;
+
+  public BigONotation(int size) {
+    this.arraySize = size;
+    this.theArray = new int[size];
+  }
+
+  public void bubbleSort() {
+		startTime = System.currentTimeMillis();
+
+		for (int i = arraySize - 1; i > 1; i--) {
+			for (int j = 0; j < i; j++) {
+				if (theArray[j] > theArray[j + 1]) {
+					swapValues(j, j + 1);
+				}
+			}
+		}
+
+		endTime = System.currentTimeMillis();
+
+		System.out.println("Bubble Sort Took " + (endTime - startTime) + "ms");
+	}
+
+  public void generateRandomArray() {
+    for (int i = 0; i < arraySize; i++) {
+      theArray[i] = (int) (Math.random() * 1000) + 10;
+    }
+
+    itemsInArray = arraySize; // Set itemsInArray to the actual number of items in the array
+  }
+
+  public void swapValues(int indexOne, int indexTwo) {
+		int temp = theArray[indexOne];
+		theArray[indexOne] = theArray[indexTwo];
+		theArray[indexTwo] = temp;
+	}
+
+  public static void main(String[] args) {
+		BigONotation test1 = new BigONotation(10000);
+		test1.generateRandomArray();
+
+    BigONotation test2 = new BigONotation(20000);
+		test2.generateRandomArray();
+
+    test1.bubbleSort();
+    test2.bubbleSort();
+	}
+}
+```
+> The bubble sort algorithm will sort each array in ascending order.
+> For the array of size 10000, the bubble sort operation might take a relatively short amount of time, likely less than a second.
+> For the array of size 20000, the bubble sort operation will likely take longer than for the smaller array, as bubble sort has a time complexity of O(n^2) and its performance degrades quickly with larger input sizes. It might take a few seconds or more to complete.
+> We can sse how dramatically slower the bubble sort gets depending upon the amount of data
+> And that is why orden of N squared is very bad and to be avoided.
 
 <!-- falta arrumar -->
 
@@ -169,13 +240,7 @@ public class BigONotation {
 		BigONotation testAlgo5 = new BigONotation(400000);
 		testAlgo5.generateRandomArray();
 
-		// O(N^2) Test
 		/*
-		 * testAlgo2.bubbleSort();
-		 * 
-		 * testAlgo3.bubbleSort();
-		 * 
-		 * testAlgo4.bubbleSort();
 		 * 
 		 * // 0 (log N) Test
 		 * 
@@ -193,36 +258,6 @@ public class BigONotation {
 
 		System.out.println("Quick Sort Took " + (endTime - startTime));
 
-	}
-
-	// O(N^2) Time to complete will be proportional to
-	// the square of the amount of data (Bubble Sort)
-	// Algorithms with more nested iterations will result
-	// in O(N^3), O(N^4), etc. performance
-
-	// Each pass through the outer loop (0)N requires us
-	// to go through the entire list again so N multiplies
-	// against itself or it is squared
-
-	public void bubbleSort() {
-
-		startTime = System.currentTimeMillis();
-
-		for (int i = arraySize - 1; i > 1; i--) {
-
-			for (int j = 0; j < i; j++) {
-
-				if (theArray[j] > theArray[j + 1]) {
-
-					swapValues(j, j + 1);
-
-				}
-			}
-		}
-
-		endTime = System.currentTimeMillis();
-
-		System.out.println("Bubble Sort Took " + (endTime - startTime));
 	}
 
 	// O (log N) Occurs when the data being used is decreased
@@ -348,26 +383,5 @@ public class BigONotation {
 		theArray = new int[size];
 
 	}
-
-	public void generateRandomArray() {
-
-		for (int i = 0; i < arraySize; i++) {
-
-			theArray[i] = (int) (Math.random() * 1000) + 10;
-
-		}
-
-		itemsInArray = arraySize - 1;
-
-	}
-
-	public void swapValues(int indexOne, int indexTwo) {
-
-		int temp = theArray[indexOne];
-		theArray[indexOne] = theArray[indexTwo];
-		theArray[indexTwo] = temp;
-
-	}
-
 }
 ```
