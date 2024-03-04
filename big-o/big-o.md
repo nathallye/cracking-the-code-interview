@@ -152,7 +152,7 @@ public class BigONotation {
 
 ## O(N^2) 
 
-- `Time to complete` will be `proportional to the square(quadrado) of the amount of data`(Bubble Sort).
+- `Time to complete` will be `proportional to the square(quadrado) of the amount of data (Bubble Sort)`.
 Algorithms with more nested iterations will result in O(N^3), O(N^4), etc. performance.
 `Each pass through the outer loop(laço externo) (0)N requires usto go through the entire list again` so N multiplies	against itself or it is squared.
 
@@ -222,57 +222,31 @@ public class BigONotation {
 > We can sse how dramatically slower the bubble sort gets depending upon the amount of data
 > And that is why orden of N squared is very bad and to be avoided.
 
-<!-- falta arrumar -->
+## O (log N) 
+
+Occurs `when the data being used is decreased by roughly 50% each time through the algorithm`. `The Binary search` is a perfect example of this.
+Pretty fast because the `log N` increases at a dramatically	slower rate as N increases.
+O (log N) algorithms `are very efficient because increasing the amount of data has little effect at some point early	on because the amount of data is halved on each run through`.
 
 ``` java
 public class BigONotation {
-	public static void main(String[] args) {	
 
-		BigONotation testAlgo2 = new BigONotation(100000);
-		testAlgo2.generateRandomArray();
+	private int[] theArray;
 
-		BigONotation testAlgo3 = new BigONotation(200000);
-		testAlgo3.generateRandomArray();
+	private int arraySize;
 
-		BigONotation testAlgo4 = new BigONotation(30000);
-		testAlgo4.generateRandomArray();
+	private int itemsInArray = 0;
 
-		BigONotation testAlgo5 = new BigONotation(400000);
-		testAlgo5.generateRandomArray();
+	static long startTime;
 
-		/*
-		 * 
-		 * // 0 (log N) Test
-		 * 
-		 * testAlgo2.binarySearchForValue(20);
-		 * testAlgo3.binarySearchForValue(20);
-		 */
+	static long endTime;
 
-		// O (n log n) Test
-
-		startTime = System.currentTimeMillis();
-
-		testAlgo2.quickSort(0, testAlgo2.itemsInArray);
-
-		endTime = System.currentTimeMillis();
-
-		System.out.println("Quick Sort Took " + (endTime - startTime));
-
-	}
-
-	// O (log N) Occurs when the data being used is decreased
-	// by roughly 50% each time through the algorithm. The
-	// Binary search is a perfect example of this.
-
-	// Pretty fast because the log N increases at a dramatically
-	// slower rate as N increases
-
-	// O (log N) algorithms are very efficient because increasing
-	// the amount of data has little effect at some point early
-	// on because the amount of data is halved on each run through
+  public BigONotation(int size) {
+    this.arraySize = size;
+    this.theArray = new int[size];
+  }
 
 	public void binarySearchForValue(int value) {
-
 		startTime = System.currentTimeMillis();
 
 		int lowIndex = 0;
@@ -281,107 +255,157 @@ public class BigONotation {
 		int timesThrough = 0;
 
 		while (lowIndex <= highIndex) {
-
 			int middleIndex = (highIndex + lowIndex) / 2;
 
 			if (theArray[middleIndex] < value)
 				lowIndex = middleIndex + 1;
-
 			else if (theArray[middleIndex] > value)
 				highIndex = middleIndex - 1;
-
 			else {
-
 				System.out.println("\nFound a Match for " + value
 						+ " at Index " + middleIndex);
 
 				lowIndex = highIndex + 1;
-
 			}
 
 			timesThrough++;
-
 		}
 
-		// This doesn't really show anything because
-		// the algorithm is so fast
-
+		// This doesn't really show anything because the algorithm is so fast
 		endTime = System.currentTimeMillis();
 
-		System.out.println("Binary Search Took " + (endTime - startTime));
+		System.out.println("Binary Search Took " + (endTime - startTime) + "ms");
 
 		System.out.println("Times Through: " + timesThrough);
-
 	}
 
-	// O (n log n) Most sorts are at least O(N) because
-	// every element must be looked at, at least once.
-	// The bubble sort is O(N^2)
-	// To figure out the number of comparisons we need
-	// to make with the Quick Sort we first know that
-	// it is comparing and moving values very
-	// efficiently without shifting. That means values
-	// are compared only once. So each comparison will
-	// reduce the possible final sorted lists in half.
-	// Comparisons = log n! (Factorial of n)
-	// Comparisons = log n + log(n-1) + .... + log(1)
-	// This evaluates to n log n
+	public void generateRandomArray() {
+    for (int i = 0; i < arraySize; i++) {
+      theArray[i] = (int) (Math.random() * 1000) + 10;
+    }
+
+    itemsInArray = arraySize; // Set itemsInArray to the actual number of items in the array
+  }
+
+  public static void main(String[] args) {
+		BigONotation test1 = new BigONotation(10000);
+		test1.generateRandomArray();
+
+    BigONotation test2 = new BigONotation(20000);
+		test2.generateRandomArray();
+
+    test1.binarySearchForValue(20);
+    test2.binarySearchForValue(20);
+	}
+}
+```
+
+> The code implements a binary search algorithm to find a specific value (in this case, 20) within two randomly generated arrays of sizes 10000 and 20000 respectively. 
+> Given that binary search has a time complexity of O(log n), it is expected to be faster than linear search, especially for large arrays. Here's what you can generally expect:
+> For the array of size 10000, the binary search operation might take a very short amount of time, likely less than a millisecond.
+> For the array of size 20000, the binary search operation will also likely take a very short amount of time, possibly still less than a millisecond.
+> The number of iterations (times through the loop) for binary search is likely to be small, as binary search quickly converges towards the target value, typically requiring only a few iterations even for large arrays.
+> Binary Search Took 0ms
+> Times Through: 13
+> Binary Search Took 0ms
+> Times Through: 14
+
+## O (n log n) 
+
+`Most sorts are at least O(N)` because every element must be looked at, at least once.
+The `bubble sort is O(N^2)`. 
+`To figure out the number of comparisons` we need to make with the `Quick Sort` we first know that it is comparing and moving values very efficiently without shifting. That means `values	are compared only once`. So each comparison will reduce the possible final sorted lists in half.
+Comparisons = log n! (Factorial of n)
+Comparisons = log n + log(n-1) + .... + log(1)
+This evaluates to `n log n`.
+
+``` java
+public class BigONotation {
+
+	private int[] theArray;
+
+	private int arraySize;
+
+	private int itemsInArray = 0;
+
+	static long startTime;
+
+	static long endTime;
+
+  public BigONotation(int size) {
+    this.arraySize = size;
+    this.theArray = new int[size];
+  }
 
 	public void quickSort(int left, int right) {
-
 		if (right - left <= 0)
 			return;
-
 		else {
-
 			int pivot = theArray[right];
-
 			int pivotLocation = partitionArray(left, right, pivot);
 
 			quickSort(left, pivotLocation - 1);
 			quickSort(pivotLocation + 1, right);
-
 		}
+	}
 
+	public void generateRandomArray() {
+    for (int i = 0; i < arraySize; i++) {
+      theArray[i] = (int) (Math.random() * 1000) + 10;
+    }
+
+    itemsInArray = arraySize; // Set itemsInArray to the actual number of items in the array
+  }
+
+	public void swapValues(int indexOne, int indexTwo) {
+		int temp = theArray[indexOne];
+		theArray[indexOne] = theArray[indexTwo];
+		theArray[indexTwo] = temp;
 	}
 
 	public int partitionArray(int left, int right, int pivot) {
-
 		int leftPointer = left - 1;
 		int rightPointer = right;
 
 		while (true) {
-
 			while (theArray[++leftPointer] < pivot)
 				;
-
 			while (rightPointer > 0 && theArray[--rightPointer] > pivot)
 				;
-
 			if (leftPointer >= rightPointer) {
-
 				break;
-
 			} else {
-
 				swapValues(leftPointer, rightPointer);
-
 			}
-
 		}
 
 		swapValues(leftPointer, right);
 
 		return leftPointer;
-
 	}
 
-	BigONotation(int size) {
+  public static void main(String[] args) {
+		BigONotation test1 = new BigONotation(100000);
+		test1.generateRandomArray();
 
-		arraySize = size;
+    BigONotation test2 = new BigONotation(200000);
+		test2.generateRandomArray();
 
-		theArray = new int[size];
+		long startTime = System.currentTimeMillis();
 
+		// test1.quickSort(0, test1.itemsInArray - 1); // Only one sorting operation should be performed at a time
+		test2.quickSort(0, test2.itemsInArray - 1);
+
+		long endTime = System.currentTimeMillis();
+
+		System.out.println("Quick Sort Took " + (endTime - startTime) + "ms");
 	}
 }
 ```
+> In this code, the quickSort method is used to sort randomly generated arrays of sizes 100,000 and 200,000 respectively using the quick sort algorithm. The time taken to execute the sorting operation is measured and printed.
+> This time would be printed in milliseconds.
+> Since quick sort is a very efficient sorting algorithm with an average time complexity of O(n log n), it tends to perform well even on large arrays. However, the exact time taken can vary depending on factors such as the specific distribution of values in the array and the performance characteristics of the underlying hardware.
+> test1.quickSort(0, test1.itemsInArray - 1);
+> Quick Sort Took 99ms
+> test2.quickSort(0, test2.itemsInArray - 1);
+> Quick Sort Took 86ms
