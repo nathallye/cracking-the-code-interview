@@ -158,3 +158,72 @@ The first one does one for loop and the other one does two for loops. But then, 
 If you're going to count the number of instructions, then you'd have to go to the assembly level and take into account that multiplication requires more instructions than addition, how the compiler would optimize something, and all sorts of other details.
 
 This would be horrendously complicated, so don't even start going down this road. Big O allows us to express how the runtime scales. We just need to accept that it doesn't mean that 0(N) is always better than 0(N^2).
+
+### ▶ Drop the Non-Dominant Terms
+
+What do you do about ari expression such as 0(Nˆ2+ N)? That second N isn't exactly a constant. But it's not especially important.
+We already said that we drop constants. Therefore, 0(Nˆ2+ Nˆ2) would be 0 (Nˆ2)- If we don't care about that latter Nˆ2 term, why would we care about N? We don't.
+
+You should drop the non-dominant terms,
+• 0(Nˆ2 + N) becomes O(Nˆ2).
+• 0(N + log N) becomes O(N).
+• 0(5*2ˆN + 1000Nˆ100) becomes 0(2ˆN).
+
+We might still have a sum in a runtime. For example, the expression 0(Bˆ2 + A) cannot be reduced (without some special knowledge of A and B).
+
+The following graph depicts the rate of increase for some of the common big 0 times.
+
+[image]
+
+As you can see, O(xˆ2) is much worse than 0(x), but it's not nearly as bad as 0(2ˆx) or 0(x!} . There are lots of runtimes worse than O(x!) too, suchas 0(xˆx) or 0(2ˆx * x!).
+
+• Multi-Part Algorithms: Add vs. Multiply
+Suppose you have an algorithm that has two steps. When do you multiply the runtimes and when do you add them?
+
+This is a common source of confusion for candidates.
+
+``` java
+// Add the Runtimes: 0(A + B)
+for (int a : arrA) {
+  print(a);
+}
+
+for (int b : arrB) {
+  print(b);
+}
+
+Multiply theRuntimes: 0(A*B)
+for (int a : arrA) {
+  for (int b : arrB) {
+    print(a + "," + b);
+  }
+}
+```
+
+In the example on the left, we do A chunks of work then B chunks of work. Therefore, the total amount of work is O(A + B).
+In the example on the right, we do B chunks of work for each element in A. Therefore, the total amount of work is O(A * B).
+
+In other words:
+• If your algorithm is in the form "do this, then, when you're all done, do that" then you add the runtimes.
+• If your algorithm is in the form "do this for each time you do that" then you multiply the runtimes.
+
+It's very easy to mess this up in an interview, so be careful.
+
+### ▶ Amortized Time
+
+An ArrayList, or a dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size. You won't run out of space in the ArrayList since its capacity will grow as you insert elements.
+
+An ArrayList is implemented with an array. When the array hits capacity, the ArrayList class will create a new array with double the capacity and copy all the elements over to the new array.
+
+- How do you describe the runtime of insertion? This is a tricky question.
+
+The array could be full. If the array contains N elements, then inserting a new element will take O(N) time. You will have to create a new array of size 2N and then copy N elements over. This insertion will take O(N) time.
+
+However, we also know that this doesn't happen very often. The vast majority of the time insertion will be in 0(1) time.
+We need a concept that takes both into account. This is what amortized time does. It allows us to describe that, yes, this worst case happens every once in a while. But once it happens, it won't happen again for so long that the cost is "a mortized."
+
+- In this case, what is the amortized time?
+As we insert elements, we double the capacity when the size of the array is a power of 2. So after X elements, we double the capacity at array sizes 1, 2, 4, 8, 16,..., X. That doubling takes, respectively, 1, 2, 4, 8, 16, 32, 64,..., X copies.
+
+- What is the sum of 1 + 2 + 4 + 8 + 16 + ... + X?
+If you read this sum left to right, it starts with 1 and doubles until it gets to X. If you read right to left, it starts with X and halves until it gets to 1.
